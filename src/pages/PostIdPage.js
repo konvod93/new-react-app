@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFetching } from "../components/hooks/useFetching";
 import PostService from "../API/PostService";
-import { useSortedPosts } from "../components/hooks/usePosts";
+//import { useSortedPosts } from "../components/hooks/usePosts"; not uses
 import Loader from "../components/UI/Loader/Loader";
 
 const PostIdPage = () => {
@@ -25,13 +25,9 @@ const PostIdPage = () => {
     return (
         <div>
             <h1>Вы открыли страницу поста с ID = {params.id}</h1>
-            {isLoading
-                ? <Loader />
-                : <div> {post.id}. {post.title} </div>}
+            {isLoading ? <Loader /> : <div> {post.id}. {post.title} </div>}
             <h1>Комментарии</h1>
-            {isComLoading
-                ? <Loader />
-                : <div>
+            {isComLoading ? <Loader /> : <div>
                     {comments.map(comm =>
                         <div key={comm.id} style={{marginTop: 15}}>
                             <h5>{comm.email}</h5>
@@ -39,6 +35,7 @@ const PostIdPage = () => {
                         </div>
                     )}
                 </div>}
+                {/*красиво использовал тернарный оператор но лучше ненадо так делать)) это нужно красиво разделить или скрыть страничку за загрузкой отличное исользование на строке 28*/}
         </div>
     )
 }

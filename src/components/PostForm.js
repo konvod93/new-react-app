@@ -41,4 +41,6 @@ const PostForm = ({create}) => {
     );
 };
 
-export default PostForm
+//не оставляй такие большие коменты ксли это продакшин версия, допускается оставлять "TODO: what i mast to do with code" комментарии
+
+export default PostForm;

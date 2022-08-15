@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../styles/App.css";
+import { usePosts } from "../components/hooks/usePosts";
+import { useFetching } from "../components/hooks/useFetching";
+import { getPageCount } from "../components/utils/pages";
+import { useObserver } from "../components/hooks/useObserver";
 import PostList from "../components/PostList"
 import MyButton from "../components/UI/button/MyButton.js"
 import PostForm from "../components/PostForm.js"
 import PostFilter from "../components/PostFilter.js";
 import MyModal from "../components/UI/MyModal/MyModal";
-import { usePosts } from "../components/hooks/usePosts";
 import PostService from "../API/PostService.js";
-import Loader from "../components/UI/Loader/Loader";
-import { useFetching } from "../components/hooks/useFetching";
-import { getPageCount } from "../components/utils/pages";
+//import Loader from "../components/UI/Loader/Loader"; not uses we mast remove it
 import Pagination from "../components/UI/pagination/Pagination";
-import { useObserver } from "../components/hooks/useObserver";
 import MySelect from "../components/UI/select/MySelect";
+import "../styles/App.css";
 
+// придерживайся павильной структуры
 
 function Posts() {
 
@@ -27,8 +28,7 @@ function Posts() {
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
     const lastElement = useRef();
     
-    console.log(lastElement)
-
+    //console.log(lastElement)
 
     const [fetchPosts, isPostsLoading, postError] = useFetching(async (limit, page) => {
         const response = await PostService.getAll(limit, page);
@@ -83,7 +83,6 @@ function Posts() {
                 filter={filter}
                 setFilter={setFilter}
             />
-
             <MySelect
                 value={limit}
                 onChange={value => setLimit(value)}
@@ -95,23 +94,19 @@ function Posts() {
                     {value: -1, name: 'Показать все'},
                 ]}
             />
-
             {postError &&
                 <h1>Произошла ошибка ${postError}</h1>
             }
             <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Посты про JS' />
             <div ref={lastElement} style={{ height: 20, background: 'red' }}></div>
-            {isPostsLoading &&
-                <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Посты про JS' />
+            {
+                isPostsLoading && <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Посты про JS' />
             }
-
             <Pagination
                 page={page}
                 changePage={changePage}
                 totalPages={totalPages}
             />
-
-
         </div>
     );
 }
